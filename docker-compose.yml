@@ -1,0 +1,19 @@
+version: "3.7"
+
+volumes:
+  postgres_data:
+
+services:
+  app:
+    build:
+      context: .
+      target: development
+    volumes:
+      - ./memories:/memories/
+      - ./data:/data/
+    environment:
+      - FLASK_ENV=development
+      - DATABASE_URI=$DATABASE_URI
+    ports:
+      - 5127:5000
+    restart: always
