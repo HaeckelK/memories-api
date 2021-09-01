@@ -15,6 +15,6 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - name: Build image
-      run: docker build . --file Dockerfile --target development --name dev-image
+      run: docker build . --file Dockerfile --target development --tag dev-image
     - name: Run Code Checks
       run: docker run --rm dev-image bash -c "cd && bash code_checks.sh"
