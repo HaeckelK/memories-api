@@ -1,4 +1,4 @@
-name: Build
+name: Build Docker Image
 
 on:
   push:
@@ -18,3 +18,5 @@ jobs:
       run: docker build . --file Dockerfile --target development --tag dev-image
     - name: Run Code Checks
       run: docker run --rm dev-image bash -c "cd .. && bash code-checks.sh"
+    - name: Run Unit Tests
+      run: docker run --rm dev-image bash -c "cd .. && pytest"
