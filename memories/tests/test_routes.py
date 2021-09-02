@@ -2,7 +2,7 @@ from app.app import create_app
 
 
 def test_index() -> None:
-    flask_app = create_app()
+    flask_app = create_app(run_as_test=True)
 
     with flask_app.test_client() as test_client:
         response = test_client.get("/")
@@ -11,7 +11,7 @@ def test_index() -> None:
 
 
 def test_memories_get() -> None:
-    flask_app = create_app()
+    flask_app = create_app(run_as_test=True)
 
     with flask_app.test_client() as test_client:
         response = test_client.get("/memories")
@@ -19,7 +19,7 @@ def test_memories_get() -> None:
 
 
 def test_memories_get_id_not_found() -> None:
-    flask_app = create_app()
+    flask_app = create_app(run_as_test=True)
 
     with flask_app.test_client() as test_client:
         response = test_client.get("/memories/999")
