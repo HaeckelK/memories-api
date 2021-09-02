@@ -5,14 +5,21 @@ from typing import Dict, Tuple, Union, Any
 from flask import Flask, request
 
 
-def create_app() -> Flask:
+def create_app(run_as_test: bool=False) -> Flask:
     app = Flask(__name__)
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URI"]
+    if run_as_test is False:
+        app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URI"]
+    else:
+        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     from app.model import db, Memory
 
     db.init_app(app)
+
+    if run_as_test:
+        with app.app_context():
+            db.create_all()
 
     # TODO create dataclass and replace Any
     def serialize_memory(memory: Memory) -> Dict[str, Any]:
